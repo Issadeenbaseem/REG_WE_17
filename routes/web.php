@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,34 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-Route::get('/home',[HomeController::class,'redirect']);
-Route::get('/myappoiments',[HomeController::class,'myappoiment']);
-
-Route::get('add_doctor_view',[AdminController::class,'view_doctor']);
-Route::post('upload_doctor',[AdminController::class,'add_doctor']);
-
-Route::post('appoiment',[HomeController::class,'appoiment']);
-Route::get('appoint_cancel/{id}',[HomeController::class,'appoiment_delete']);
-
-Route::get('appoinment_view',[AdminController::class,'appoinment_view']);
-Route::get('approve/{id}',[AdminController::class,'approve']);
-Route::get('cancel/{id}',[AdminController::class,'cancel']);
-
-Route::get('manage_doctor_view',[AdminController::class,'manage_doctor_view']);
-
-Route::get('doctor_delete/{id}',[AdminController::class,'doctor_delete']);
-Route::get('/doctor_edit/{id}',[AdminController::class,'doctor_edit']);
-
-Route::post('/update_doctor/{id}',[AdminController::class,'update_doctor']);
-
-
-
-
-
-Route::get('/',[HomeController::class,'index']);
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('patient', 'App\Http\Controllers\PatientController@index');
+Route::get('patient/{id}', 'App\Http\Controllers\PatientController@search');
+Route::post('update/{id}', 'App\Http\Controllers\PatientController@update');
+Route::post('insert', 'App\Http\Controllers\PatientController@insert');
+Route::get('sort', 'App\Http\Controllers\PatientController@sort');
+Route::get('patins', function () {
+    return view('patientinsert');
+});
+Route::get('u-view/{id}','App\Http\Controllers\PatientController@handleEdit');
+Route::get('delete/{id}', 'App\Http\Controllers\PatientController@delete');
+Route::post('/search', 'App\Http\Controllers\PatientController@searchtxt');
